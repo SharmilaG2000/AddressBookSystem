@@ -32,15 +32,28 @@ class Contact {
 
 public class UC1AddressBookContact {
 
-    // List to store contacts
     static List<Contact> contacts = new ArrayList<>();
+    static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
         System.out.println("Welcome to Address Book Program");
 
-        Scanner sc = new Scanner(System.in);
+        // Add a contact
+        addContact();
 
-        // Prompting user for contact details
+        // Edit the contact by name
+        System.out.print("\nEnter first name of contact to edit: ");
+        String nameToEdit = sc.nextLine();
+        editContact(nameToEdit);
+
+        // Display updated list
+        System.out.println("\nAll Contacts:");
+        for (Contact c : contacts) {
+            System.out.println(c);
+        }
+    }
+
+    public static void addContact() {
         System.out.print("Enter First Name: ");
         String firstName = sc.nextLine();
         System.out.print("Enter Last Name: ");
@@ -55,16 +68,38 @@ public class UC1AddressBookContact {
         int zip = sc.nextInt();
         System.out.print("Enter Phone Number: ");
         long phone = sc.nextLong();
-        sc.nextLine(); // consume newline
+        sc.nextLine(); // Consume newline
         System.out.print("Enter Email: ");
         String email = sc.nextLine();
 
-        // Creating and adding the contact
         Contact newContact = new Contact(firstName, lastName, address, city, state, zip, phone, email);
         contacts.add(newContact);
-
-        // Displaying the added contact
         System.out.println("\nContact Added Successfully!");
-        System.out.println(newContact);
+    }
+
+    public static void editContact(String name) {
+        for (Contact c : contacts) {
+            if (c.firstName.equalsIgnoreCase(name)) {
+                System.out.println("Contact Found! Enter new details...");
+
+                System.out.print("Enter New Address: ");
+                c.address = sc.nextLine();
+                System.out.print("Enter New City: ");
+                c.city = sc.nextLine();
+                System.out.print("Enter New State: ");
+                c.state = sc.nextLine();
+                System.out.print("Enter New ZIP: ");
+                c.zip = sc.nextInt();
+                System.out.print("Enter New Phone Number: ");
+                c.phone = sc.nextLong();
+                sc.nextLine(); // Consume newline
+                System.out.print("Enter New Email: ");
+                c.email = sc.nextLine();
+
+                System.out.println("Contact updated successfully.");
+                return;
+            }
+        }
+        System.out.println("Contact not found.");
     }
 }
